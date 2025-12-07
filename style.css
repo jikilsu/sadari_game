@@ -56,8 +56,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* Vertically center content */
+    justify-content: flex-start;
+    /* Align content from top */
     position: relative;
     overflow-y: auto;
 }
@@ -71,11 +71,14 @@ body {
 .game-header h1 {
     font-family: var(--font-heading);
     font-size: 2.5rem;
-    margin-bottom: 2rem;
-    margin-top: 5rem;
-    /* Moved down */
+    font-weight: 900;
+    /* Extra bold */
+    margin-bottom: 1rem;
+    margin-top: -1.25rem;
+    /* Moved up by 1 line total */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    background: linear-gradient(to right, #ff6b6b, #ffe66d);
+    background: linear-gradient(to right, #ff3333, #ffcc00);
+    /* Darker, more vibrant colors */
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -87,6 +90,21 @@ body {
     flex-direction: column;
     align-items: center;
     transition: opacity 0.5s ease;
+}
+
+#setup-phase {
+    margin-top: 40vh;
+    /* Push content below middle of screen */
+}
+
+#input-phase {
+    margin-top: 30vh;
+    /* Moved up by 10% (was 40vh) */
+}
+
+#game-phase {
+    margin-top: 10vh;
+    /* Move down by 10% */
 }
 
 .hidden {
@@ -143,6 +161,12 @@ button {
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
 }
 
+/* Reduce Start Game button size */
+#btn-start {
+    padding: 0.7rem 2rem;
+    font-size: 1rem;
+}
+
 .primary-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
@@ -164,10 +188,10 @@ button {
     background: #ff4757;
     /* Bright Red/Pink for visibility */
     color: white;
-    font-size: 1.1rem;
-    /* Enlarge text slightly */
-    padding: 0.8rem 2.4rem;
-    /* Enlarge button slightly */
+    font-size: 0.95rem;
+    /* Reduced size */
+    padding: 0.6rem 1.8rem;
+    /* Reduced padding */
     border: none;
     box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
     margin-top: 2rem;
@@ -180,29 +204,31 @@ button {
 
 /* Phase 2: Details Inputs */
 #setup-phase label {
-    font-size: 1.44rem;
-    /* 120% of 1.2rem */
+    font-size: 1.0rem;
+    /* Reduced size */
     color: #8B4513;
     /* Wood/Tree trunk color */
     font-weight: bold;
 }
 
 #setup-phase input {
-    width: 140px;
-    /* Reduced to 50% of previous 280px */
+    width: 100px;
+    /* Further reduced */
     max-width: 100%;
-    font-size: 1.32rem;
-    /* 120% of 1.1rem */
+    font-size: 1.1rem;
+    /* Reduced font size */
 }
 
 #setup-phase button {
-    width: 168px;
-    /* Reduced to 60% of 280px */
+    width: 130px;
+    /* Further reduced */
     max-width: 100%;
-    padding: 1rem 0;
-    /* Slightly bigger height */
+    padding: 0.8rem 0;
+    /* Reduced height */
     line-height: 1.0;
     /* Compact text */
+    font-size: 1.0rem;
+    /* Smaller font */
 }
 
 .details-container {
@@ -374,31 +400,11 @@ canvas {
 }
 
 /* Phase 2: Details Inputs */
-#setup-phase label {
-    font-size: 1.44rem;
-    /* 120% of 1.2rem */
-    color: #8B4513;
-    /* Wood/Tree trunk color */
-    font-weight: bold;
-}
 
-#setup-phase input {
-    width: 140px;
-    /* Reduced to 50% of previous 280px */
-    max-width: 100%;
-    font-size: 1.32rem;
-    /* 120% of 1.1rem */
-}
 
-#setup-phase button {
-    width: 168px;
-    /* Reduced to 60% of 280px */
-    max-width: 100%;
-    padding: 1rem 0;
-    /* Slightly bigger height */
-    line-height: 1.0;
-    /* Compact text */
-}
+
+
+
 
 .details-container {
     width: 100%;
@@ -568,9 +574,10 @@ canvas {
     /* Let clicks pass through if needed */
 }
 
-/* BGM Toggle Button */
+/* BGM Toggle Button - Outside game container */
 .bgm-toggle-btn {
-    position: absolute;
+    position: fixed;
+    /* Fixed to viewport, not game container */
     bottom: 1.5rem;
     right: 1.5rem;
     display: flex;
@@ -587,7 +594,8 @@ canvas {
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
     transition: all 0.3s ease;
-    z-index: 100;
+    z-index: 1001;
+    /* Higher z-index to be above everything */
     cursor: pointer;
 }
 
