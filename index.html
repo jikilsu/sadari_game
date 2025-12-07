@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Ladder Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <h1>LADDER GAME</h1>
+        </header>
+
+        <!-- Phase 1: Setup -->
+        <section id="setup-phase" class="phase active">
+            <div class="input-group">
+                <label for="participant-count">참가인원(2~14)</label>
+                <input type="number" id="participant-count" min="2" max="14" value="4">
+            </div>
+            <button id="btn-apply" class="primary-btn">적용 (Apply)</button>
+        </section>
+
+        <!-- Phase 2: Details Input -->
+        <section id="input-phase" class="phase hidden">
+            <div class="details-container">
+                <div class="row-container" id="names-row">
+                    <!-- Name inputs generated here -->
+                </div>
+
+                <div class="ladder-placeholder">
+                    <span>사다리 설정 중...</span>
+                </div>
+
+                <div class="row-container" id="results-row">
+                    <!-- Result inputs generated here -->
+                </div>
+            </div>
+            <button id="btn-start" class="primary-btn">게임 시작 (Start Game)</button>
+        </section>
+
+        <!-- Phase 3: Game Play -->
+        <section id="game-phase" class="phase hidden">
+            <div class="game-board" id="game-board">
+                <div class="players-top" id="players-top">
+                    <!-- GO buttons and Names -->
+                </div>
+
+                <canvas id="ladder-canvas"></canvas>
+
+                <div class="results-bottom" id="results-bottom">
+                    <!-- Results -->
+                </div>
+            </div>
+            <button id="btn-reset" class="secondary-btn">다시 하기 (Reset)</button>
+        </section>
+        <div id="copyright-footer">
+            © Dr.부엉이. All rights reserved.
+        </div>
+
+        <!-- BGM Toggle Button -->
+        <button id="bgm-toggle" class="bgm-toggle-btn" aria-label="배경음악 토글">
+            <svg class="music-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span class="bgm-status">ON</span>
+        </button>
+    </main>
+
+    <!-- Modal for Result -->
+    <div id="result-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-player-name">Player</h2>
+            <p>결과 (Result)</p>
+            <h1 id="modal-result-value">Win!</h1>
+            <button id="btn-close-modal">확인</button>
+        </div>
+    </div>
+
+    <script src="audio.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

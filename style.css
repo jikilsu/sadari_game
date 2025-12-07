@@ -1,0 +1,650 @@
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --accent-color: #ffe66d;
+    --text-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: #1a1a2e;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+.background-overlay {
+    display: none;
+}
+
+.game-container {
+    /* Width/Height will be set by JS based on background.png size */
+    width: auto;
+    height: auto;
+    max-width: 95vw;
+    max-height: 95vh;
+    background: var(--glass-bg);
+    /* Keep glass bg as base */
+
+    /* Background Image specific settings */
+    background-image: url('background.png');
+    background-size: 100% 100%;
+    /* Fill the container */
+    /* Requested 90% size */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Vertically center content */
+    position: relative;
+    overflow-y: auto;
+}
+
+.game-container.bottom-align {
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+    /* Push content to very bottom */
+}
+
+.game-header h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+    /* Moved down */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, #ff6b6b, #ffe66d);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.phase {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+/* Inputs */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+input {
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    font-family: var(--font-heading);
+    text-align: center;
+    width: 200px;
+    outline: none;
+    transition: transform 0.2s;
+}
+
+input:focus {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+    color: white;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#btn-reset {
+    background: #ff4757;
+    /* Bright Red/Pink for visibility */
+    color: white;
+    font-size: 1.1rem;
+    /* Enlarge text slightly */
+    padding: 0.8rem 2.4rem;
+    /* Enlarge button slightly */
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+    margin-top: 2rem;
+}
+
+#btn-reset:hover {
+    background: #ff6b81;
+    transform: translateY(-2px);
+}
+
+/* Phase 2: Details Inputs */
+#setup-phase label {
+    font-size: 1.44rem;
+    /* 120% of 1.2rem */
+    color: #8B4513;
+    /* Wood/Tree trunk color */
+    font-weight: bold;
+}
+
+#setup-phase input {
+    width: 140px;
+    /* Reduced to 50% of previous 280px */
+    max-width: 100%;
+    font-size: 1.32rem;
+    /* 120% of 1.1rem */
+}
+
+#setup-phase button {
+    width: 168px;
+    /* Reduced to 60% of 280px */
+    max-width: 100%;
+    padding: 1rem 0;
+    /* Slightly bigger height */
+    line-height: 1.0;
+    /* Compact text */
+}
+
+.details-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.row-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    width: 100%;
+}
+
+.row-container input {
+    width: 100%;
+    min-width: 60px;
+    max-width: 120px;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+}
+
+.ladder-placeholder {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px dashed rgba(255, 255, 255, 0.3);
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Phase 3: Game Board */
+.game-board {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    /* Adjust based on screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.players-top,
+.results-bottom {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    z-index: 10;
+}
+
+.player-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+    /* fixed width for alignment */
+}
+
+.go-btn {
+    background: var(--accent-color);
+    color: #333;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.go-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #fff;
+}
+
+.go-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.name-tag,
+.result-tag {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Behind buttons */
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    color: #333;
+    padding: 2rem 4rem;
+    border-radius: 20px;
+    text-align: center;
+    animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-content h2 {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.modal-content h1 {
+    color: var(--primary-color);
+    font-size: 3rem;
+    margin: 1rem 0;
+    /* Let clicks pass through if it overlaps anything */
+}
+
+/* Hide copyright in Game Phase (when bottom-align is active) */
+.game-container.bottom-align #copyright-footer {
+    display: none;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#copyright-footer {
+    position: absolute;
+    bottom: 5%;
+    margin-top: 2rem;
+}
+
+#btn-reset:hover {
+    background: #ff6b81;
+    transform: translateY(-2px);
+}
+
+/* Phase 2: Details Inputs */
+#setup-phase label {
+    font-size: 1.44rem;
+    /* 120% of 1.2rem */
+    color: #8B4513;
+    /* Wood/Tree trunk color */
+    font-weight: bold;
+}
+
+#setup-phase input {
+    width: 140px;
+    /* Reduced to 50% of previous 280px */
+    max-width: 100%;
+    font-size: 1.32rem;
+    /* 120% of 1.1rem */
+}
+
+#setup-phase button {
+    width: 168px;
+    /* Reduced to 60% of 280px */
+    max-width: 100%;
+    padding: 1rem 0;
+    /* Slightly bigger height */
+    line-height: 1.0;
+    /* Compact text */
+}
+
+.details-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.row-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    width: 100%;
+}
+
+.row-container input {
+    width: 100%;
+    min-width: 60px;
+    max-width: 120px;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+}
+
+.ladder-placeholder {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px dashed rgba(255, 255, 255, 0.3);
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Phase 3: Game Board */
+.game-board {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    /* Adjust based on screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.players-top,
+.results-bottom {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    z-index: 10;
+}
+
+.player-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+    /* fixed width for alignment */
+}
+
+.go-btn {
+    background: var(--accent-color);
+    color: #333;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.go-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #fff;
+}
+
+.go-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.name-tag,
+.result-tag {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Behind buttons */
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    color: #333;
+    padding: 2rem 4rem;
+    border-radius: 20px;
+    text-align: center;
+    animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-content h2 {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.modal-content h1 {
+    color: var(--primary-color);
+    font-size: 3rem;
+    margin: 1rem 0;
+    /* Let clicks pass through if it overlaps anything */
+}
+
+/* Copyright visibility handled globally */
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#copyright-footer {
+    position: absolute;
+    bottom: 11.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    color: #00BFFF;
+    font-size: 0.9rem;
+    pointer-events: none;
+    /* Let clicks pass through if needed */
+}
+
+/* BGM Toggle Button */
+.bgm-toggle-btn {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(78, 205, 196, 0.2);
+    /* Secondary color with transparency */
+    border: 2px solid rgba(78, 205, 196, 0.5);
+    border-radius: 50px;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    transition: all 0.3s ease;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.bgm-toggle-btn:hover {
+    background: rgba(78, 205, 196, 0.3);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.5);
+}
+
+.bgm-toggle-btn:active {
+    transform: translateY(0);
+}
+
+.bgm-toggle-btn .music-icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.bgm-toggle-btn:hover .music-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.bgm-toggle-btn.off {
+    background: rgba(255, 107, 107, 0.2);
+    /* Primary color with transparency */
+    border-color: rgba(255, 107, 107, 0.5);
+    color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.bgm-toggle-btn.off:hover {
+    background: rgba(255, 107, 107, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+}
+
+.bgm-toggle-btn .bgm-status {
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+}
+
+/* Animation for button state change */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.bgm-toggle-btn.toggling {
+    animation: pulse 0.3s ease;
+}
