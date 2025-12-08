@@ -15,9 +15,14 @@
     padding: 0;
 }
 
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     font-family: var(--font-body);
-    background-color: #1a1a2e;
     background-color: #1a1a2e;
     min-height: 100vh;
     display: flex;
@@ -25,6 +30,8 @@ body {
     align-items: center;
     color: var(--text-color);
     overflow: hidden;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    touch-action: manipulation;
 }
 
 .background-overlay {
@@ -37,14 +44,13 @@ body {
     height: auto;
     max-width: 95vw;
     max-height: 95vh;
+    aspect-ratio: 9 / 16;
     background: var(--glass-bg);
     /* Keep glass bg as base */
 
     /* Background Image specific settings */
     background-image: url('background.png');
-    background-size: 100% 100%;
-    /* Fill the container */
-    /* Requested 90% size */
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
@@ -151,6 +157,7 @@ button {
     border: none;
     border-radius: 50px;
     transition: all 0.3s ease;
+    min-height: 44px;
 }
 
 .primary-btn {
@@ -245,14 +252,15 @@ button {
     justify-content: space-around;
     gap: 10px;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .row-container input {
     width: 100%;
     min-width: 60px;
-    max-width: 120px;
-    font-size: 0.9rem;
-    padding: 0.5rem;
+    max-width: 140px;
+    font-size: 0.95rem;
+    padding: 0.55rem;
 }
 
 .ladder-placeholder {
@@ -269,7 +277,8 @@ button {
 .game-board {
     position: relative;
     width: 100%;
-    height: 60vh;
+    height: clamp(320px, 60vh, 640px);
+    min-height: 320px;
     /* Adjust based on screen */
     display: flex;
     flex-direction: column;
@@ -655,4 +664,93 @@ canvas {
 
 .bgm-toggle-btn.toggling {
     animation: pulse 0.3s ease;
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+    body {
+        align-items: flex-start;
+        overflow: auto;
+    }
+
+    .game-container {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        padding: 1.25rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .game-header h1 {
+        font-size: clamp(1.8rem, 4vw, 2.3rem);
+        margin-top: -0.5rem;
+    }
+
+    #setup-phase,
+    #input-phase,
+    #game-phase {
+        margin-top: 6vh;
+    }
+
+    .row-container input {
+        max-width: 100px;
+        font-size: 0.9rem;
+    }
+
+    .player-wrapper {
+        width: auto;
+        flex: 1;
+    }
+
+    .name-tag,
+    .result-tag {
+        font-size: 0.8rem;
+        max-width: 90%;
+    }
+
+    .game-board {
+        height: clamp(260px, 55vh, 520px);
+    }
+
+    .bgm-toggle-btn {
+        bottom: calc(1rem + env(safe-area-inset-bottom));
+        right: calc(1rem + env(safe-area-inset-right));
+    }
+}
+
+@media (max-width: 540px) {
+    .game-container {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    label {
+        font-size: 1rem;
+    }
+
+    input {
+        width: 160px;
+        font-size: 1rem;
+    }
+
+    .primary-btn {
+        padding: 0.9rem 2.4rem;
+        font-size: 1.05rem;
+    }
+
+    #btn-start {
+        padding: 0.6rem 1.6rem;
+        font-size: 0.95rem;
+    }
+
+    .go-btn {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+    }
+
+    .game-board {
+        height: clamp(240px, 52vh, 480px);
+    }
 }
