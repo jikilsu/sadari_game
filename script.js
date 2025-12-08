@@ -204,7 +204,7 @@ function handleStartGame() {
         done: false
     }));
 
-    state.results = Array.from(resultInputs).map((input, idx) => input.value || `R${idx + 1}`);
+    state.results = Array.from(resultInputs).map(input => input.value || `R${i + 1}`);
 
     generateLadderData();
     setupGameBoardUI();
@@ -293,28 +293,21 @@ function setupGameBoardUI() {
 
 function resizeCanvas() {
     const parent = els.game.board;
-    const rect = parent.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    // We want canvas to cover the area between the top buttons and bottom results
+    // But for simplicity, let's make it cover the container and we draw lines with padding
+    state.canvas.width = parent.clientWidth;
+    state.canvas.height = parent.clientHeight;
 
-    // Match device pixel ratio to avoid blurry lines on mobile/high-DPI screens
-    state.canvas.width = rect.width * dpr;
-    state.canvas.height = rect.height * dpr;
-    state.canvas.style.width = `${rect.width}px`;
-    state.canvas.style.height = `${rect.height}px`;
-
-    // Draw in CSS pixel space
-    state.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    // Calculate geometries using CSS pixels for consistent layout
-    state.columnWidth = rect.width / state.participantCount;
-    state.ladderHeight = rect.height - (state.paddingTop + state.paddingBottom);
+    // Calculate geometries
+    state.columnWidth = state.canvas.width / state.participantCount;
+    state.ladderHeight = state.canvas.height - (state.paddingTop + state.paddingBottom);
 }
 
 // draw: Static Ladder
 function drawLadder() {
     if (!state.ctx) return;
     const ctx = state.ctx;
-    const { clientWidth: width, clientHeight: height } = state.canvas;
+    const { width, height } = state.canvas;
 
     ctx.clearRect(0, 0, width, height);
 
